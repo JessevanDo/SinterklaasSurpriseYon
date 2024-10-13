@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher Challenge</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        .code-editor {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body onload="brython()">
+    <h1>Vigenère Cipher Challenge</h1>
+    <p>Welcome to your Sinterklaas challenge! Here’s an encrypted message that you must decrypt. Use the Vigenère cipher with the correct keyword.</p>
+    <p><strong>Encrypted Message:</strong> RIJVS UYVJN</p>
+    <p>Write your Python script below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
+
+    <textarea id="code" cols="60" rows="10">
+cipher_text = "RIJVS UYVJN"
+keyword = "KEY"
+# Write your decryption script here!
+print("Decrypted message is:", cipher_text)  # Example output
+    </textarea>
+    
+    <button onclick="runBrythonCode()">Run Code</button>
+    
+    <p id="result"></p>
+
+    <script type="text/python">
+        from browser import document, window
+
+        def runBrythonCode():
+            code = document["code"].value
+            exec(code)
+
+        document["runCode"].bind("click", runBrythonCode)
+    </script>
+</body>
+</html>
