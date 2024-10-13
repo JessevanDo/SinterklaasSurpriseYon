@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vigenère Cipher Challenge</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,45 +17,63 @@
         }
     </style>
 </head>
-<body onload="brython()">
+<body>
     <h1>Vigenère Cipher Challenge</h1>
     <p>Welcome to your Sinterklaas challenge! Here’s an encrypted message that you must decrypt. Use the Vigenère cipher with the correct keyword.</p>
     <p><strong>Encrypted Message:</strong> RIJVS UYVJN</p>
-    <p>Write your Python script below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
+
+    <label for="keyword">Enter Keyword:</label>
+    <input type="text" id="keyword" placeholder="Enter keyword here">
+    
+    <p>Write your decryption algorithm below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
 
     <textarea id="code" cols="60" rows="10">
-cipher_text = "RIJVS UYVJN"
-keyword = "KEY"
-# Write your decryption script here!
-print("Decrypted message is:", cipher_text)  # Example output
+// Your JavaScript decryption script goes here
+// Example: Use a simple loop to decrypt each letter
+function vigenereDecrypt(ciphertext, keyword) {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let decrypted = "";
+    keyword = keyword.toUpperCase();
+    let keywordIndex = 0;
+
+    for (let i = 0; i < ciphertext.length; i++) {
+        const letter = ciphertext[i];
+        if (alphabet.includes(letter)) {
+            const shift = alphabet.indexOf(keyword[keywordIndex % keyword.length]);
+            const decryptedLetter = alphabet[(alphabet.indexOf(letter) - shift + 26) % 26];
+            decrypted += decryptedLetter;
+            keywordIndex++;
+        } else {
+            decrypted += letter; // Keep spaces and punctuation intact
+        }
+    }
+
+    return decrypted;
+}
+
+let result = vigenereDecrypt("RIJVS UYVJN", "KEY");  // Replace "KEY" with your input keyword
+console.log("Decrypted message is:", result);
     </textarea>
     
-    <button onclick="runBrythonCode()">Run Code</button>
+    <button onclick="runCode()">Run Code</button>
     
     <p><strong>Output:</strong></p>
     <p id="result"></p>
 
-    <script type="text/python">
-        from browser import document, window
+    <script>
+        function runCode() {
+            const keyword = document.getElementById("keyword").value.toUpperCase();
+            const textarea = document.getElementById("code").value;
 
-        def custom_print(*args):
-            """ Custom print function to display output in the result <p> element """
-            result_element = document["result"]
-            # Append all print arguments as a string to the result
-            result_element.text = " ".join(str(arg) for arg in args)
-
-        def runBrythonCode():
-            code = document["code"].value
-            # Clear previous output
-            document["result"].text = ""
-            try:
-                # Redirect the print function to our custom print function
-                exec(code, {"print": custom_print})
-            except Exception as e:
-                # If there's an error, display it
-                document["result"].text = f"Error: {str(e)}"
-
-        document["runBrythonCode"].bind("click", runBrythonCode)
+            try {
+                // Evaluate the JavaScript code in the textarea, including the vigenereDecrypt function
+                const func = new Function(textarea + '; return vigenereDecrypt("RIJVS UYVJN", "' + keyword + '");');
+                const output = func();  // Run the script and get the decrypted message
+                document.getElementById("result").innerText = "Decrypted message: " + output;
+            } catch (error) {
+                document.getElementById("result").innerText = "Error: " + error.message;
+            }
+        }
     </script>
 </body>
 </html>
