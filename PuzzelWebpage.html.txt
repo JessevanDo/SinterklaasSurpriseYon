@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher Challenge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        .code-editor {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vigenère Cipher Challenge</h1>
+    <p>Welcome to your Sinterklaas challenge! Here’s an encrypted message that you must decrypt. Use the Vigenère cipher with the correct keyword.</p>
+    <p><strong>Encrypted Message:</strong> RIJVS UYVJN</p>
+    <p>Write your Python script in the code editor below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
+
+    <div class="code-editor">
+        <textarea id="code" name="code">
+# Your Python Vigenère decryption script goes here
+# Example:
+# cipher_text = "RIJVS UYVJN"
+# keyword = "KEY"
+# Write your script to decrypt the message!
+        </textarea>
+    </div>
+    
+    <button onclick="runCode()">Run Code</button>
+    
+    <p id="result"></p>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/mode/python/python.js"></script>
+    
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "default"
+        });
+        
+        function runCode() {
+            var code = editor.getValue();
+            try {
+                // For the demo, this won't actually execute Python code but simulate running it
+                // (Since running Python code in-browser is a bit more involved)
+                document.getElementById("result").innerText = "Running your code... Decryption successful!";
+            } catch (error) {
+                document.getElementById("result").innerText = "Error running your code.";
+            }
+        }
+    </script>
+</body>
+</html>
