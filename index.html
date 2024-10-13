@@ -28,30 +28,9 @@
     <p>Write your decryption algorithm below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
 
     <textarea id="code" cols="60" rows="10">
-// Your JavaScript decryption script goes here
-// Example: Use a simple loop to decrypt each letter
-function vigenereDecrypt(ciphertext, keyword) {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let decrypted = "";
-    keyword = keyword.toUpperCase();
-    let keywordIndex = 0;
-
-    for (let i = 0; i < ciphertext.length; i++) {
-        const letter = ciphertext[i];
-        if (alphabet.includes(letter)) {
-            const shift = alphabet.indexOf(keyword[keywordIndex % keyword.length]);
-            const decryptedLetter = alphabet[(alphabet.indexOf(letter) - shift + 26) % 26];
-            decrypted += decryptedLetter;
-            keywordIndex++;
-        } else {
-            decrypted += letter; // Keep spaces and punctuation intact
-        }
-    }
-
-    return decrypted;
-}
-
-let result = vigenereDecrypt("RIJVS UYVJN", "KEY");  // Replace "KEY" with your input keyword
+// Sample JavaScript code for testing
+console.log("Hello World!");
+let result = vigenereDecrypt("RIJVS UYVJN", keyword);  
 console.log("Decrypted message is:", result);
     </textarea>
     
@@ -61,15 +40,36 @@ console.log("Decrypted message is:", result);
     <p id="result"></p>
 
     <script>
+        function vigenereDecrypt(ciphertext, keyword) {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let decrypted = "";
+            keyword = keyword.toUpperCase();
+            let keywordIndex = 0;
+
+            for (let i = 0; i < ciphertext.length; i++) {
+                const letter = ciphertext[i];
+                if (alphabet.includes(letter)) {
+                    const shift = alphabet.indexOf(keyword[keywordIndex % keyword.length]);
+                    const decryptedLetter = alphabet[(alphabet.indexOf(letter) - shift + 26) % 26];
+                    decrypted += decryptedLetter;
+                    keywordIndex++;
+                } else {
+                    decrypted += letter;  // Keep spaces and punctuation intact
+                }
+            }
+
+            return decrypted;
+        }
+
         function runCode() {
             const keyword = document.getElementById("keyword").value.toUpperCase();
             const textarea = document.getElementById("code").value;
 
             try {
-                // Evaluate the JavaScript code in the textarea, including the vigenereDecrypt function
-                const func = new Function(textarea + '; return vigenereDecrypt("RIJVS UYVJN", "' + keyword + '");');
-                const output = func();  // Run the script and get the decrypted message
-                document.getElementById("result").innerText = "Decrypted message: " + output;
+                // Pass the vigenereDecrypt function and keyword as part of the scope
+                const func = new Function('vigenereDecrypt', 'keyword', textarea);
+                const output = func(vigenereDecrypt, keyword);  // Run the script and get the decrypted message
+                document.getElementById("result").innerText = "Output: " + output;
             } catch (error) {
                 document.getElementById("result").innerText = "Error: " + error.message;
             }
