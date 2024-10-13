@@ -29,9 +29,10 @@
 
     <textarea id="code" cols="60" rows="10">
 // Sample JavaScript code for testing
-console.log("Hello World!");
-let result = vigenereDecrypt("RIJVS UYVJN", keyword);  
-console.log("Decrypted message is:", result);
+function decryptMessage() {
+    let result = vigenereDecrypt("RIJVS UYVJN", keyword);  
+    return result; // Return the decrypted message to display it
+}
     </textarea>
     
     <button onclick="runCode()">Run Code</button>
@@ -67,9 +68,9 @@ console.log("Decrypted message is:", result);
 
             try {
                 // Pass the vigenereDecrypt function and keyword as part of the scope
-                const func = new Function('vigenereDecrypt', 'keyword', textarea);
+                const func = new Function('vigenereDecrypt', 'keyword', textarea + '; return decryptMessage();');
                 const output = func(vigenereDecrypt, keyword);  // Run the script and get the decrypted message
-                document.getElementById("result").innerText = "Output: " + output;
+                document.getElementById("result").innerText = "Decrypted message: " + output;
             } catch (error) {
                 document.getElementById("result").innerText = "Error: " + error.message;
             }
