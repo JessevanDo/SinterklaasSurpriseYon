@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vigenère Cipher Challenge</title>
+    <title>Sinterklaas Cipher Uitdaging</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,68 +11,39 @@
             padding: 20px;
             text-align: center;
         }
-        .code-editor {
-            max-width: 800px;
-            margin: 0 auto;
+        .input-field {
+            margin: 10px;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Vigenère Cipher Challenge</h1>
-    <p>Welcome to your Sinterklaas challenge! Here’s an encrypted message that you must decrypt. Use the Vigenère cipher with the correct keyword.</p>
-    <p><strong>Encrypted Message:</strong> RIJVS UYVJN</p>
+    <h1>Sinterklaas Cipher Uitdaging</h1>
+    <p>Ontcijfer de code met Vigenère, en open het slot, want voor jou ligt er iets moois klaar, vol plezier en genot!</p>
 
-    <label for="keyword">Enter Keyword:</label>
-    <input type="text" id="keyword" placeholder="Enter keyword here">
-    
-    <p>Write your decryption algorithm below to decrypt the message. Once you're done, run it to see if you have the correct solution!</p>
+    <p><strong>Versleuteld Bericht:</strong> YQSMKZPEGIX</p>
 
-    <textarea id="code" cols="60" rows="10">
-// Sample JavaScript code for testing
-function decryptMessage() {
-    let result = vigenereDecrypt("RIJVS UYVJN", keyword);  
-    return result; // Return the decrypted message to display it
-}
-    </textarea>
+    <div class="input-field">
+        <label for="solution">Voer oplossing in:</label>
+        <input type="text" id="solution" placeholder="Voer oplossing hier in">
+    </div>
+
+    <button onclick="checkSolution()">Controleer oplossing</button>
     
-    <button onclick="runCode()">Run Code</button>
-    
-    <p><strong>Output:</strong></p>
     <p id="result"></p>
 
     <script>
-        function vigenereDecrypt(ciphertext, keyword) {
-            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            let decrypted = "";
-            keyword = keyword.toUpperCase();
-            let keywordIndex = 0;
+        function checkSolution() {
+            const solution = document.getElementById("solution").value.toUpperCase();
 
-            for (let i = 0; i < ciphertext.length; i++) {
-                const letter = ciphertext[i];
-                if (alphabet.includes(letter)) {
-                    const shift = alphabet.indexOf(keyword[keywordIndex % keyword.length]);
-                    const decryptedLetter = alphabet[(alphabet.indexOf(letter) - shift + 26) % 26];
-                    decrypted += decryptedLetter;
-                    keywordIndex++;
-                } else {
-                    decrypted += letter;  // Keep spaces and punctuation intact
-                }
-            }
-
-            return decrypted;
-        }
-
-        function runCode() {
-            const keyword = document.getElementById("keyword").value.toUpperCase();
-            const textarea = document.getElementById("code").value;
-
-            try {
-                // Pass the vigenereDecrypt function and keyword as part of the scope
-                const func = new Function('vigenereDecrypt', 'keyword', textarea + '; return decryptMessage();');
-                const output = func(vigenereDecrypt, keyword);  // Run the script and get the decrypted message
-                document.getElementById("result").innerText = "Decrypted message: " + output;
-            } catch (error) {
-                document.getElementById("result").innerText = "Error: " + error.message;
+            // Check if the entered solution is correct
+            if (solution === "PEPERNOOT") {
+                document.getElementById("result").innerText = "Goed gedaan! De code voor het slot is: 979";
+            } else {
+                document.getElementById("result").innerText = "Onjuiste oplossing. Probeer het nog een keer!";
             }
         }
     </script>
