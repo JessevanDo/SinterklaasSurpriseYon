@@ -38,12 +38,69 @@
             font-size: 3em;
             color: #ff0000;
         }
+        /* Tooltip container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the icon */
+            left: 50%;
+            margin-left: -125px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        /* Tooltip arrow */
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* At the bottom of the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        /* Show the tooltip text when hovering over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* Information icon styling */
+        .info-icon {
+            font-size: 1.5em;
+            color: #ff0000; /* Red color to match the menacing theme */
+        }
     </style>
 </head>
 <body>
     <h1 class="warning-icon">⚠️</h1>
     <h1>AIVD-Piet's Ontcijfer Uitdaging</h1>
     <p>Ontcijfer de code met Vigenère, en open het slot, want voor jou ligt er iets moois klaar, vol plezier en genot!</p>
+    <p>Lees om te beginnen de pagina over de encryptie techniek. Die is al ouder dan antiek! </p>
+    <p>Bezoek daarvoor deze link, dat kan tegenwoordig met de klik van een pink!</p>
+    <p>Gebruik daarna al je programmeerskills en sla zelf aan het typen, ik weet dat het vakantie is maar niet te veel miepen!</p>
+    <p>Gebruik Python, Java, Kotlin of pen en papier; het maakt AIVD-piet allemaal niet uit. Maar ChatGPT is verboden, dan heb je het voor mij verbruid!</p>
+    <p>Er heerst echter enige urgentie, neem niet te lang de tijd; over 30 minuten ontploft de bom, dan is dit huis zijn muren en dak kwijt!</p>
+
+    <!-- Information Icon with Tooltip -->
+    <div class="tooltip">
+        <span class="info-icon">ℹ️</span>
+        <span class="tooltiptext">
+            Het Vigenère-cijfer is een versleutelmethode waarbij elke letter van de originele tekst wordt verschoven volgens een sleutelwoord. Bijvoorbeeld, met de sleutel 'WALLHACK' wordt 'PEPERNOOT' versleuteld tot 'LEAPYNQYP'.
+        </span>
+    </div>
 
     <p><strong>Versleuteld Bericht:</strong> LEAPYNQYP</p>
     <p><strong>Keyword:</strong> WALLHACK</p>
@@ -85,7 +142,6 @@
                 timeLeft -= 1;
             }
         }, 1000);  // Tick every second
-
         // Check solution function
         function checkSolution() {
             const solution = document.getElementById("solution").value.toUpperCase();
