@@ -47,7 +47,7 @@
         /* Tooltip text */
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 250px;
+            width: 200px;
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -55,24 +55,13 @@
             padding: 5px;
             position: absolute;
             z-index: 1;
-            bottom: 125%; /* Position above the icon */
+            bottom: 125%;
             left: 50%;
-            margin-left: -125px; /* Center the tooltip */
+            margin-left: -100px;
             opacity: 0;
             transition: opacity 0.3s;
         }
-        /* Tooltip arrow */
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%; /* At the bottom of the tooltip */
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-        /* Show the tooltip text when hovering over the tooltip container */
+        /* Show tooltip text on hover */
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
@@ -80,7 +69,36 @@
         /* Information icon styling */
         .info-icon {
             font-size: 1.5em;
-            color: #ff0000; /* Red color to match the menacing theme */
+            color: #ff0000;
+        }
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background-color: #333;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color: #fff;
+            text-align: left;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -88,32 +106,25 @@
     <h1 class="warning-icon">⚠️</h1>
     <h1>AIVD-Piet's Ontcijfer Uitdaging</h1>
     <p>Ontcijfer de code met Vigenère, en open het slot, want voor jou ligt er iets moois klaar, vol plezier en genot!</p>
-    <p>Lees om te beginnen de pagina over de encryptie techniek. Die is al ouder dan antiek! </p>
-    <p>Bezoek daarvoor deze link, dat kan tegenwoordig met de klik van een pink!</p>
-    <p>Gebruik daarna al je programmeerskills en sla zelf aan het typen, ik weet dat het vakantie is maar niet te veel miepen!</p>
-    <p>Gebruik Python, Java, Kotlin of pen en papier; het maakt AIVD-piet allemaal niet uit. Maar ChatGPT is verboden, dan heb je het voor mij verbruid!</p>
-    <p>Er heerst echter enige urgentie, neem niet te lang de tijd; over 30 minuten ontploft de bom, dan is dit huis zijn muren en dak kwijt!</p>
 
     <!-- Information Icon with Tooltip -->
     <div class="tooltip">
-        <span class="info-icon">ℹ️</span>
-        <span class="tooltiptext">
-            "Het Vigenère-cijfer versleutelt een tekst door elke letter te verschuiven op basis van een sleutelwoord. Hierbij wordt elke letter van het alfabet omgezet naar een cijfer: A=0, B=1, C=2, enzovoort."
+        <span class="info-icon" onclick="openModal()">ℹ️</span>
+        <span class="tooltiptext">Klik voor uitleg over het Vigenère-cijfer</span>
+    </div>
 
-Hier is een voorbeeld:
-
-Originele tekst: "ATTACKATDAWN"
-Sleutelwoord: "LEMON"
-Elke letter van de tekst wordt verschoven volgens de letter van het sleutelwoord. Hierbij herhalen we het sleutelwoord zo vaak als nodig is.
-
-A van "ATTACK" is letter 0, en de L van "LEMON" is letter 11. A wordt dus 11 stappen opgeschoven, wat L oplevert.
-T (19) verschuift met E (4), wat resulteert in X.
-T (19) met M (12) wordt F.
-Herhaal dit proces voor de hele tekst. Het versleutelde resultaat wordt dan:
-
-Versleutelde tekst: "LXFOPVEFRNHR"
-Met deze methode kan de ontvanger met het sleutelwoord de originele tekst terughalen.
-        </span>
+    <!-- Modal for Full Explanation -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Wat is het Vigenère-cijfer?</h2>
+            <p>Het Vigenère-cijfer is een versleutelmethode waarbij elke letter van de tekst wordt verschoven volgens een sleutelwoord.</p>
+            <p>Bijvoorbeeld:</p>
+            <p>Originele tekst: "ATTACKATDAWN"<br>
+               Sleutelwoord: "LEMON"</p>
+            <p>Elke letter in de tekst verschuift op basis van het corresponderende cijfer van de sleutel. Hierbij wordt het alfabet als volgt genummerd: A=0, B=1, C=2, enz.</p>
+            <p>De eerste A (0) met L (11) wordt L. T (19) met E (4) wordt X. Door dit voor elke letter te herhalen, wordt "ATTACKATDAWN" versleuteld als "LXFOPVEFRNHR".</p>
+        </div>
     </div>
 
     <p><strong>Versleuteld Bericht:</strong> LEAPYNQYP</p>
@@ -134,41 +145,50 @@ Met deze methode kan de ontvanger met het sleutelwoord de originele tekst terugh
 
     <script>
         // Countdown timer variables
-        let timeLeft = 1800;  // Countdown starts at 30 minutes (1800 seconds)
+        let timeLeft = 1800;
         const timerDisplay = document.getElementById("timer");
         const tickingSound = document.getElementById("ticking-sound");
 
-        // Start countdown timer with ticking sound
-        tickingSound.play();  // Start the ticking sound immediately
+        tickingSound.play();
         const countdown = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(countdown);
                 tickingSound.pause();
                 tickingSound.currentTime = 0;
-                document.getElementById("result").innerText = "De tijd is om, de bom explodeert! Maar de code krijg je alsnog, wees niet gealarmeerd. Code: 979.";
+                document.getElementById("result").innerText = "De tijd is om, de bom explodeert! Code: 979.";
             } else {
-                // Format time as MM:SS
                 let minutes = Math.floor(timeLeft / 60);
                 let seconds = timeLeft % 60;
                 if (seconds < 10) seconds = "0" + seconds;
-
                 timerDisplay.innerText = `Tijd over: ${minutes}:${seconds}`;
                 timeLeft -= 1;
             }
-        }, 1000);  // Tick every second
-        // Check solution function
+        }, 1000);
+
         function checkSolution() {
             const solution = document.getElementById("solution").value.toUpperCase();
-
-            // Check if the entered solution is correct
             if (solution === "PEPERNOOT") {
-                clearInterval(countdown);  // Stop countdown when correct
+                clearInterval(countdown);
                 tickingSound.pause();
                 tickingSound.currentTime = 0;
-                document.getElementById("result").innerText = "Goed gedaan, je bent een held! Hier is de code voor die bom die je kwelt. Code: 979.";
-                timerDisplay.innerText = "";  // Clear the timer display
+                document.getElementById("result").innerText = "Goed gedaan! Code: 979.";
+                timerDisplay.innerText = "";
             } else {
                 document.getElementById("result").innerText = "Onjuiste oplossing. Probeer het nog een keer!";
+            }
+        }
+
+        function openModal() {
+            document.getElementById("infoModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("infoModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target === document.getElementById("infoModal")) {
+                closeModal();
             }
         }
     </script>
