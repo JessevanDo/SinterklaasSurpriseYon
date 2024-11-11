@@ -18,6 +18,10 @@
             font-weight: bold;
             margin-top: 20px;
         }
+        #timer {
+            font-size: 1.5em;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -34,14 +38,49 @@
     <button onclick="checkSolution()">Controleer oplossing</button>
     
     <p id="result"></p>
+    <p id="timer">Tijd over: 00:30</p>
+
+    <!-- Ticking sound -->
+    <audio id="ticking-sound" src="https://www.soundjay.com/button/sounds/beep-07.mp3" preload="auto"></audio>
 
     <script>
+        // Countdown timer variables
+        let timeLeft = 30;  // Countdown starts at 30 seconds
+        const timerDisplay = document.getElementById("timer");
+        const tickingSound = document.getElementById("ticking-sound");
+
+        // Start countdown timer with ticking sound
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                tickingSound.pause();
+                tickingSound.currentTime = 0;
+                document.getElementById("result").innerText = "Tijd is om! De bom is ontploft! Probeer het opnieuw.";
+            } else {
+                // Play ticking sound
+                tickingSound.play();
+                
+                // Format time as MM:SS
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                if (seconds < 10) seconds = "0" + seconds;
+
+                timerDisplay.innerText = `Tijd over: 00:${seconds}`;
+                timeLeft -= 1;
+            }
+        }, 1000);  // Tick every second
+
+        // Check solution function
         function checkSolution() {
             const solution = document.getElementById("solution").value.toUpperCase();
 
             // Check if the entered solution is correct
             if (solution === "PEPERNOOT") {
+                clearInterval(countdown);  // Stop countdown when correct
+                tickingSound.pause();
+                tickingSound.currentTime = 0;
                 document.getElementById("result").innerText = "Goed gedaan! De code voor het slot is: 979";
+                timerDisplay.innerText = "";  // Clear the timer display
             } else {
                 document.getElementById("result").innerText = "Onjuiste oplossing. Probeer het nog een keer!";
             }
