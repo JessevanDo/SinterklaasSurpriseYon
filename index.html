@@ -98,7 +98,21 @@
     <div class="tooltip">
         <span class="info-icon">ℹ️</span>
         <span class="tooltiptext">
-            Het Vigenère-cijfer is een versleutelmethode waarbij elke letter van de originele tekst wordt verschoven volgens een sleutelwoord. Bijvoorbeeld, met de sleutel 'WALLHACK' wordt 'PEPERNOOT' versleuteld tot 'LEAPYNQYP'.
+            "Het Vigenère-cijfer versleutelt een tekst door elke letter te verschuiven op basis van een sleutelwoord. Hierbij wordt elke letter van het alfabet omgezet naar een cijfer: A=0, B=1, C=2, enzovoort."
+
+Hier is een voorbeeld:
+
+Originele tekst: "ATTACKATDAWN"
+Sleutelwoord: "LEMON"
+Elke letter van de tekst wordt verschoven volgens de letter van het sleutelwoord. Hierbij herhalen we het sleutelwoord zo vaak als nodig is.
+
+A van "ATTACK" is letter 0, en de L van "LEMON" is letter 11. A wordt dus 11 stappen opgeschoven, wat L oplevert.
+T (19) verschuift met E (4), wat resulteert in X.
+T (19) met M (12) wordt F.
+Herhaal dit proces voor de hele tekst. Het versleutelde resultaat wordt dan:
+
+Versleutelde tekst: "LXFOPVEFRNHR"
+Met deze methode kan de ontvanger met het sleutelwoord de originele tekst terughalen.
         </span>
     </div>
 
